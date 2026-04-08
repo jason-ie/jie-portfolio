@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #111318;
+  --bg-surface: #151720;
+  --text: #E8E2F4;
+  --text-dim: rgba(232, 226, 244, 0.38);
+  --text-sub: rgba(232, 226, 244, 0.18);
+  --accent: #8B9CF4;
+  --accent-border: rgba(139, 156, 244, 0.22);
+  --rule: rgba(232, 226, 244, 0.07);
+  --ghost-stroke: rgba(232, 226, 244, 0.10);
+  --green: #22C55E;
+  --red: #EF4444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(139, 156, 244, 0.25);
+}
+
+/* Scroll cue scanner animation */
+@keyframes scanner {
+  0% { transform: scaleX(0); transform-origin: left; }
+  50% { transform: scaleX(1); transform-origin: left; }
+  50.001% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+.scroll-cue::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: var(--accent);
+  animation: scanner 2s ease-in-out infinite;
+  margin-top: 8px;
+  width: 40px;
+}
