@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { useScramble } from "use-scramble";
 
 const experiences = [
   {
@@ -27,6 +29,25 @@ const experiences = [
 ];
 
 export default function Experience() {
+  const labelRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(labelRef, { once: true });
+
+  const { ref: scrambleRef, replay } = useScramble({
+    text: "Experience",
+    speed: 0.6,
+    tick: 1,
+    step: 1,
+    scramble: 4,
+    seed: 2,
+    chance: 0.85,
+    overdrive: false,
+    overflow: false,
+  });
+
+  useEffect(() => {
+    if (inView) replay();
+  }, [inView, replay]);
+
   return (
     <section
       id="experience"
@@ -36,6 +57,7 @@ export default function Experience() {
     >
       {/* Section Label */}
       <div
+        ref={labelRef}
         style={{
           display: "flex",
           alignItems: "center",
@@ -44,6 +66,7 @@ export default function Experience() {
         }}
       >
         <span
+          ref={scrambleRef}
           style={{
             fontFamily: "var(--font-space-grotesk), sans-serif",
             fontWeight: 400,
@@ -52,9 +75,7 @@ export default function Experience() {
             textTransform: "uppercase",
             color: "var(--text-sub)",
           }}
-        >
-          Experience
-        </span>
+        />
         <div
           style={{
             flex: 1,
