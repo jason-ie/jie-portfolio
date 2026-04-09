@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { useScramble } from "use-scramble";
 
 const links = [
   { label: "Email", href: "mailto:jason@example.com" },
@@ -10,6 +12,25 @@ const links = [
 ];
 
 export default function Contact() {
+  const labelRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(labelRef, { once: true });
+
+  const { ref: scrambleRef, replay } = useScramble({
+    text: "Contact",
+    speed: 0.6,
+    tick: 1,
+    step: 1,
+    scramble: 4,
+    seed: 2,
+    chance: 0.85,
+    overdrive: false,
+    overflow: false,
+  });
+
+  useEffect(() => {
+    if (inView) replay();
+  }, [inView, replay]);
+
   return (
     <section
       id="contact"
@@ -19,6 +40,7 @@ export default function Contact() {
     >
       {/* Section Label */}
       <div
+        ref={labelRef}
         style={{
           display: "flex",
           alignItems: "center",
@@ -27,6 +49,7 @@ export default function Contact() {
         }}
       >
         <span
+          ref={scrambleRef}
           style={{
             fontFamily: "var(--font-space-grotesk), sans-serif",
             fontWeight: 400,
@@ -35,9 +58,7 @@ export default function Contact() {
             textTransform: "uppercase",
             color: "var(--text-sub)",
           }}
-        >
-          Contact
-        </span>
+        />
         <div
           style={{
             flex: 1,
