@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { useScramble } from "use-scramble";
 
 const projects = [
   { num: "01", name: "Order Execution System", stack: "C++ · FIX Protocol", tag: "Systems" },
@@ -10,6 +12,25 @@ const projects = [
 ];
 
 export default function Work() {
+  const labelRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(labelRef, { once: true });
+
+  const { ref: scrambleRef, replay } = useScramble({
+    text: "Selected Work",
+    speed: 0.6,
+    tick: 1,
+    step: 1,
+    scramble: 4,
+    seed: 2,
+    chance: 0.85,
+    overdrive: false,
+    overflow: false,
+  });
+
+  useEffect(() => {
+    if (inView) replay();
+  }, [inView, replay]);
+
   return (
     <section
       id="work"
@@ -20,6 +41,7 @@ export default function Work() {
     >
       {/* Section Label */}
       <div
+        ref={labelRef}
         style={{
           display: "flex",
           alignItems: "center",
@@ -28,6 +50,7 @@ export default function Work() {
         }}
       >
         <span
+          ref={scrambleRef}
           style={{
             fontFamily: "var(--font-space-grotesk), sans-serif",
             fontWeight: 400,
@@ -36,9 +59,7 @@ export default function Work() {
             textTransform: "uppercase",
             color: "var(--text-sub)",
           }}
-        >
-          Selected Work
-        </span>
+        />
         <div
           style={{
             flex: 1,
