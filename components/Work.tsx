@@ -494,7 +494,7 @@ function ProjectDetail({
                 gap: "4px",
               }}
             >
-              Case Study
+              ↗ Case Study
             </a>
           )}
         </div>
