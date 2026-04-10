@@ -15,8 +15,10 @@ export default function Hero() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.88]);
-  const rotateX = useTransform(scrollYProgress, [0, 1], [0, -6]);
+  const ghostScale = useTransform(scrollYProgress, [0, 0.85], [1, 14]);
+  const ghostOpacity = useTransform(scrollYProgress, [0.6, 0.85], [1, 0]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0, 0.35], [0, -24]);
 
   return (
     <div ref={containerRef} style={{ height: "200vh" }}>
@@ -36,9 +38,6 @@ export default function Hero() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-end",
-            scale,
-            rotateX,
-            transformOrigin: "center top",
           }}
         >
           {/* JSON Ghost */}
@@ -48,6 +47,9 @@ export default function Hero() {
               top: 0,
               right: 0,
               y: ghostY,
+              scale: ghostScale,
+              opacity: ghostOpacity,
+              transformOrigin: "center center",
               lineHeight: 0.85,
               textAlign: "right",
               userSelect: "none",
@@ -79,11 +81,13 @@ export default function Hero() {
           </motion.div>
 
           {/* Hero Content */}
-          <div
+          <motion.div
             style={{
               position: "relative",
               zIndex: 1,
               padding: "0 56px 56px",
+              opacity: contentOpacity,
+              y: contentY,
             }}
           >
             {/* Eyebrow */}
@@ -202,7 +206,7 @@ export default function Hero() {
                 <div className="scroll-cue" />
               </div>
             </div>
-          </div>
+          </motion.div>
         </motion.section>
       </div>
     </div>
