@@ -10,7 +10,7 @@ export default function Hero() {
   const { scrollY } = useScroll();
   const ghostY = useTransform(scrollY, [0, 1000], [0, 60]);
 
-  // Container scroll progress — drives perspective push
+  // Container scroll progress — drives ghost-text scale-to-fill exit
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
