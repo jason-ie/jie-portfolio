@@ -114,7 +114,7 @@ export default function Work() {
             fontSize: "10px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color: "var(--text-secondary)",
+            color: "var(--text-sub)",
           }}
         />
         <div
@@ -171,7 +171,7 @@ export default function Work() {
         }
         .bento-card:hover .bento-ghost {
           opacity: 0.55 !important;
-          transform: scale(1.06) translateY(-4px);
+          transform: scale(1.06) translateY(-4px) !important;
         }
         .bento-card:hover .bento-name {
           color: #E8E2F4 !important;
@@ -209,6 +209,7 @@ function BentoCard({
   return (
     <motion.div
       layoutId={project.id}
+      layout
       className="bento-card"
       onClick={onClick}
       initial={{ y: 28, opacity: 0 }}
@@ -222,7 +223,6 @@ function BentoCard({
         padding: "24px",
         position: "relative",
         cursor: "pointer",
-        overflow: "hidden",
       }}
     >
       {/* Top-left: project number */}
@@ -333,7 +333,6 @@ function ProjectDetail({
   return (
     <motion.div
       layoutId={project.id}
-      layout
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       style={{
         position: "absolute",
