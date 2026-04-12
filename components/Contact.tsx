@@ -13,7 +13,7 @@ const links = [
 
 export default function Contact() {
   const labelRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(labelRef, { once: true });
+  const inView = useInView(labelRef, { once: false });
 
   const { ref: scrambleRef, replay } = useScramble({
     text: "Contact",
@@ -56,7 +56,7 @@ export default function Contact() {
             fontSize: "10px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color: "var(--text-sub)",
+            color: "var(--text-secondary)",
           }}
         />
         <div

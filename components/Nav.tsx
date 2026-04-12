@@ -26,7 +26,7 @@ export default function Nav() {
           fontSize: "13px",
           letterSpacing: "0.12em",
           textTransform: "uppercase",
-          color: "var(--text-sub)",
+          color: "var(--text-secondary)",
           pointerEvents: "auto",
         }}
       >
@@ -50,7 +50,7 @@ export default function Nav() {
               fontWeight: 400,
               fontSize: "13px",
               letterSpacing: "0.06em",
-              color: "var(--text-sub)",
+              color: "var(--text-secondary)",
               textDecoration: "none",
               transition: "color 0.2s ease",
             }}
