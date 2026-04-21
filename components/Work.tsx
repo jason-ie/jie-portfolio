@@ -85,6 +85,18 @@ export default function Work() {
     if (inView) replay();
   }, [inView, replay]);
 
+  // Scroll lock when drawer open
+  useEffect(() => {
+    if (selectedId) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedId]);
+
   const selectedProject = projects.find((p) => p.id === selectedId) ?? null;
 
   return (
@@ -111,7 +123,7 @@ export default function Work() {
           style={{
             fontFamily: "var(--font-space-grotesk), sans-serif",
             fontWeight: 400,
-            fontSize: "10px",
+            fontSize: "12px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             color: "var(--text-sub)",
@@ -126,39 +138,224 @@ export default function Work() {
         />
       </div>
 
-      {/* Grid / Detail */}
-      <AnimatePresence mode="wait">
-        {!selectedId ? (
-          <motion.div
-            key="grid"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "1px",
-              background: "rgba(232,226,244,0.05)",
-            }}
-          >
-            {projects.map((project, i) => (
-              <BentoCard
-                key={project.id}
-                project={project}
-                index={i}
-                onClick={() => setSelectedId(project.id)}
-              />
-            ))}
-          </motion.div>
-        ) : (
-          selectedProject && (
-            <ProjectDetail
-              key={selectedId}
-              project={selectedProject}
-              onClose={() => setSelectedId(null)}
+      {/* Grid — always visible */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "1px",
+          background: "rgba(232,226,244,0.05)",
+        }}
+      >
+        {projects.map((project, i) => (
+          <BentoCard
+            key={project.id}
+            project={project}
+            index={i}
+            onClick={() => setSelectedId(project.id)}
+          />
+        ))}
+      </div>
+
+      {/* Backdrop + Side Drawer */}
+      <AnimatePresence>
+        {selectedId && selectedProject && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              key="backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setSelectedId(null)}
+              style={{
+                position: "fixed",
+                inset: 0,
+                background: "rgba(10, 11, 15, 0.75)",
+                backdropFilter: "blur(4px)",
+                WebkitBackdropFilter: "blur(4px)",
+                zIndex: 100,
+              }}
             />
-          )
+
+            {/* Drawer */}
+            <motion.div
+              key="drawer"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 320, damping: 32 }}
+              style={{
+                position: "fixed",
+                top: 0,
+                right: 0,
+                bottom: 0,
+                width: "48vw",
+                minWidth: "380px",
+                background: `linear-gradient(135deg, #151720, ${selectedProject.tint} 100%), #151720`,
+                borderLeft: "1px solid rgba(232,226,244,0.07)",
+                overflowY: "auto",
+                zIndex: 101,
+              }}
+            >
+              {/* Ghost glyph */}
+              <span
+                style={{
+                  position: "absolute",
+                  bottom: "24px",
+                  right: "32px",
+                  fontFamily: "Courier New, monospace",
+                  fontSize: "96px",
+                  fontWeight: 700,
+                  color: "var(--text)",
+                  opacity: 0.04,
+                  lineHeight: 1,
+                  userSelect: "none",
+                  pointerEvents: "none",
+                }}
+              >
+                {selectedProject.glyph}
+              </span>
+
+              {/* Content fades in after drawer settles */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                style={{ padding: "32px", position: "relative", zIndex: 1 }}
+              >
+                {/* Back button */}
+                <button
+                  onClick={() => setSelectedId(null)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "var(--text-dim)",
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                    fontSize: "12px",
+                    letterSpacing: "0.08em",
+                    padding: 0,
+                    marginBottom: "32px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                  }}
+                >
+                  ← back
+                </button>
+
+                {/* Tag */}
+                <div
+                  style={{
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                    fontSize: "8px",
+                    letterSpacing: "0.18em",
+                    textTransform: "uppercase",
+                    color: "var(--accent)",
+                    marginBottom: "10px",
+                  }}
+                >
+                  {selectedProject.tag}
+                </div>
+
+                {/* Title */}
+                <div
+                  style={{
+                    fontFamily: "var(--font-fraunces), serif",
+                    fontWeight: 700,
+                    fontSize: "36px",
+                    letterSpacing: "-0.02em",
+                    lineHeight: 1.1,
+                    color: "var(--text)",
+                    marginBottom: "8px",
+                  }}
+                >
+                  {selectedProject.name}
+                </div>
+
+                {/* Stack */}
+                <div
+                  style={{
+                    fontFamily: "var(--font-jetbrains-mono), monospace",
+                    fontSize: "11px",
+                    color: "var(--text-dim)",
+                    opacity: 0.6,
+                    marginBottom: "20px",
+                  }}
+                >
+                  {selectedProject.stack}
+                </div>
+
+                {/* Divider */}
+                <div
+                  style={{
+                    width: "100%",
+                    height: "1px",
+                    background: "var(--rule)",
+                    marginBottom: "20px",
+                  }}
+                />
+
+                {/* Description */}
+                <p
+                  style={{
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                    fontSize: "12px",
+                    lineHeight: 1.7,
+                    color: "var(--text-dim)",
+                    maxWidth: "480px",
+                    marginBottom: "28px",
+                  }}
+                >
+                  {selectedProject.description}
+                </p>
+
+                {/* Links */}
+                <div style={{ display: "flex", gap: "16px" }}>
+                  {selectedProject.github && (
+                    <a
+                      href={selectedProject.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontFamily: "var(--font-space-grotesk), sans-serif",
+                        fontSize: "11px",
+                        letterSpacing: "0.08em",
+                        color: "var(--accent)",
+                        textDecoration: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px",
+                      }}
+                    >
+                      ↗ GitHub
+                    </a>
+                  )}
+                  {selectedProject.caseStudy && (
+                    <a
+                      href={selectedProject.caseStudy}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontFamily: "var(--font-space-grotesk), sans-serif",
+                        fontSize: "11px",
+                        letterSpacing: "0.08em",
+                        color: "var(--text-dim)",
+                        textDecoration: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "4px",
+                      }}
+                    >
+                      ↗ Case Study
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
@@ -208,13 +405,13 @@ function BentoCard({
 }) {
   return (
     <motion.div
-      layoutId={project.id}
-      layout
       className="bento-card"
       onClick={onClick}
       role="button"
       tabIndex={0}
-      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onClick(); }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") onClick();
+      }}
       initial={{ y: 28, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
@@ -322,185 +519,6 @@ function BentoCard({
           {project.stack}
         </div>
       </div>
-    </motion.div>
-  );
-}
-
-function ProjectDetail({
-  project,
-  onClose,
-}: {
-  project: Project;
-  onClose: () => void;
-}) {
-  return (
-    <motion.div
-      layoutId={project.id}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      style={{
-        position: "absolute",
-        inset: 0,
-        background: `linear-gradient(135deg, #111318, ${project.tint} 100%), #111318`,
-        backgroundColor: "#111318",
-        padding: "32px",
-        overflow: "hidden",
-      }}
-    >
-      {/* Ghost glyph — visual continuity */}
-      <span
-        style={{
-          position: "absolute",
-          bottom: "24px",
-          right: "32px",
-          fontFamily: "Courier New, monospace",
-          fontSize: "96px",
-          fontWeight: 700,
-          color: "var(--text)",
-          opacity: 0.04,
-          lineHeight: 1,
-          userSelect: "none",
-          pointerEvents: "none",
-        }}
-      >
-        {project.glyph}
-      </span>
-
-      {/* Detail content fades in after layout morph */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        style={{ position: "relative", zIndex: 1 }}
-      >
-        {/* Back button */}
-        <button
-          onClick={onClose}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            color: "var(--text-dim)",
-            fontFamily: "var(--font-space-grotesk), sans-serif",
-            fontSize: "12px",
-            letterSpacing: "0.08em",
-            padding: 0,
-            marginBottom: "32px",
-            display: "flex",
-            alignItems: "center",
-            gap: "6px",
-          }}
-        >
-          ← back
-        </button>
-
-        {/* Tag */}
-        <div
-          style={{
-            fontFamily: "var(--font-space-grotesk), sans-serif",
-            fontSize: "8px",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "var(--accent)",
-            marginBottom: "10px",
-          }}
-        >
-          {project.tag}
-        </div>
-
-        {/* Title */}
-        <div
-          style={{
-            fontFamily: "var(--font-fraunces), serif",
-            fontWeight: 700,
-            fontSize: "36px",
-            letterSpacing: "-0.02em",
-            lineHeight: 1.1,
-            color: "var(--text)",
-            marginBottom: "8px",
-          }}
-        >
-          {project.name}
-        </div>
-
-        {/* Stack */}
-        <div
-          style={{
-            fontFamily: "var(--font-jetbrains-mono), monospace",
-            fontSize: "11px",
-            color: "var(--text-dim)",
-            opacity: 0.6,
-            marginBottom: "20px",
-          }}
-        >
-          {project.stack}
-        </div>
-
-        {/* Divider */}
-        <div
-          style={{
-            width: "100%",
-            height: "1px",
-            background: "var(--rule)",
-            marginBottom: "20px",
-          }}
-        />
-
-        {/* Description */}
-        <p
-          style={{
-            fontFamily: "var(--font-space-grotesk), sans-serif",
-            fontSize: "12px",
-            lineHeight: 1.7,
-            color: "var(--text-dim)",
-            maxWidth: "480px",
-            marginBottom: "28px",
-          }}
-        >
-          {project.description}
-        </p>
-
-        {/* Links */}
-        <div style={{ display: "flex", gap: "16px" }}>
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: "var(--font-space-grotesk), sans-serif",
-                fontSize: "11px",
-                letterSpacing: "0.08em",
-                color: "var(--accent)",
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-              }}
-            >
-              ↗ GitHub
-            </a>
-          )}
-          {project.caseStudy && (
-            <a
-              href={project.caseStudy}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: "var(--font-space-grotesk), sans-serif",
-                fontSize: "11px",
-                letterSpacing: "0.08em",
-                color: "var(--text-dim)",
-                textDecoration: "none",
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-              }}
-            >
-              ↗ Case Study
-            </a>
-          )}
-        </div>
-      </motion.div>
     </motion.div>
   );
 }

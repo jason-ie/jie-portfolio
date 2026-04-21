@@ -70,7 +70,7 @@ export default function Experience() {
           style={{
             fontFamily: "var(--font-space-grotesk), sans-serif",
             fontWeight: 400,
-            fontSize: "10px",
+            fontSize: "12px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             color: "var(--text-secondary)",

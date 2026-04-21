@@ -15,13 +15,15 @@ export default function Hero() {
     target: containerRef,
     offset: ["start start", "end end"],
   });
-  const ghostScale = useTransform(scrollYProgress, [0, 0.85], [1, 14]);
-  const ghostOpacity = useTransform(scrollYProgress, [0.6, 0.85], [1, 0]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
-  const contentY = useTransform(scrollYProgress, [0, 0.35], [0, -24]);
+  // Ghost zooms in from the very first scroll tick; opacity fades mid-zoom.
+  const ghostScale = useTransform(scrollYProgress, [0, 0.75], [1, 14]);
+  const ghostOpacity = useTransform(scrollYProgress, [0.45, 0.68], [1, 0]);
+  // Content begins fading immediately so zoom + exit happen in parallel — no sticky delay.
+  const contentOpacity = useTransform(scrollYProgress, [0.02, 0.42], [1, 0]);
+  const contentY = useTransform(scrollYProgress, [0.02, 0.42], [0, -32]);
 
   return (
-    <div ref={containerRef} style={{ height: "200vh" }}>
+    <div ref={containerRef} style={{ height: "160vh" }}>
       <div
         style={{
           position: "sticky",
@@ -29,6 +31,7 @@ export default function Hero() {
           height: "100vh",
           perspective: "1000px",
           overflow: "hidden",
+          backgroundColor: "var(--bg)",
         }}
       >
         <motion.section
@@ -56,9 +59,9 @@ export default function Hero() {
               pointerEvents: "none",
               zIndex: 0,
               maskImage:
-                "radial-gradient(ellipse 80% 70% at 80% 50%, black 30%, transparent 80%), linear-gradient(to bottom, black 40%, transparent 100%)",
+                "radial-gradient(ellipse 95% 80% at 75% 45%, black 40%, transparent 85%), linear-gradient(to bottom, black 50%, transparent 100%)",
               WebkitMaskImage:
-                "radial-gradient(ellipse 80% 70% at 80% 50%, black 30%, transparent 80%), linear-gradient(to bottom, black 40%, transparent 100%)",
+                "radial-gradient(ellipse 95% 80% at 75% 45%, black 40%, transparent 85%), linear-gradient(to bottom, black 50%, transparent 100%)",
               maskComposite: "intersect",
               WebkitMaskComposite: "source-in",
             }}
@@ -71,7 +74,7 @@ export default function Hero() {
                   fontWeight: 900,
                   fontSize: "52vw",
                   color: "transparent",
-                  WebkitTextStroke: "1.5px var(--ghost-stroke)",
+                  WebkitTextStroke: "2px var(--ghost-stroke)",
                   display: "block",
                 }}
               >

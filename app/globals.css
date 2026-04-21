@@ -8,11 +8,11 @@
   --text: #E8E2F4;
   --text-secondary: rgba(232, 226, 244, 0.60);
   --text-dim: rgba(232, 226, 244, 0.38);
-  --text-sub: rgba(232, 226, 244, 0.18);
+  --text-sub: rgba(232, 226, 244, 0.42);
   --accent: #8B9CF4;
   --accent-border: rgba(139, 156, 244, 0.22);
   --rule: rgba(232, 226, 244, 0.07);
-  --ghost-stroke: rgba(232, 226, 244, 0.10);
+  --ghost-stroke: rgba(139, 156, 244, 0.22);
   --green: #22C55E;
   --red: #EF4444;
 }
