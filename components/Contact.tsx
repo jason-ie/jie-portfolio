@@ -34,6 +34,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
+      className="contact-section"
       style={{
         padding: '0 56px 80px',
       }}
@@ -107,6 +108,7 @@ export default function Contact() {
 
       {/* Link Row */}
       <div
+        className="contact-links"
         style={{
           display: 'flex',
           gap: '40px',
@@ -155,6 +157,7 @@ export default function Contact() {
 
       {/* Footer */}
       <div
+        className="contact-footer"
         style={{
           display: 'flex',
           justifyContent: 'space-between',

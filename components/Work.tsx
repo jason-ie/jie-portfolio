@@ -144,6 +144,7 @@ export default function Work() {
   return (
     <section
       id="work"
+      className="work-section"
       style={{
         padding: '120px 56px',
         maxWidth: '100%',
@@ -182,6 +183,7 @@ export default function Work() {
 
       {/* Grid — always visible */}
       <div
+        className="work-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
@@ -229,6 +231,7 @@ export default function Work() {
             {/* Drawer */}
             <motion.div
               key="drawer"
+              className="work-drawer"
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -680,7 +683,7 @@ function BentoCard({
 }) {
   return (
     <motion.div
-      className="bento-card"
+      className="bento-card work-card"
       onClick={onClick}
       role="button"
       tabIndex={0}

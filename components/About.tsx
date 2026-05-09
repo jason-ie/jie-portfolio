@@ -56,6 +56,7 @@ export default function About() {
   return (
     <section
       id="about"
+      className="about-section"
       style={{
         position: 'relative',
         padding: '120px 56px',
@@ -65,6 +66,7 @@ export default function About() {
       <div>
         {/* Ghost number */}
         <span
+          className="about-ghost"
           style={{
             position: 'absolute',
             top: 0,
@@ -120,6 +122,7 @@ export default function About() {
 
         {/* Two-column grid */}
         <div
+          className="about-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -166,6 +169,7 @@ export default function About() {
 
             {/* Headline */}
             <div
+              className="about-headline"
               style={{
                 fontFamily: 'var(--font-fraunces), serif',
                 fontStyle: 'italic',
@@ -228,6 +232,7 @@ export default function About() {
           >
             {/* Stack grid */}
             <div
+              className="about-stack-grid"
               style={{
                 display: 'grid',
                 gridTemplateColumns: '1fr 1fr 1fr',

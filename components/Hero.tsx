@@ -45,6 +45,7 @@ export default function Hero() {
         >
           {/* JSON Ghost */}
           <motion.div
+            className="hero-ghost"
             style={{
               position: 'absolute',
               top: 0,
@@ -85,6 +86,7 @@ export default function Hero() {
 
           {/* Portrait */}
           <motion.div
+            className="hero-portrait"
             style={{
               position: 'absolute',
               top: '16vh',
@@ -114,6 +116,7 @@ export default function Hero() {
 
           {/* Hero Content */}
           <motion.div
+            className="hero-content"
             style={{
               position: 'relative',
               zIndex: 2,
@@ -124,6 +127,7 @@ export default function Hero() {
           >
             {/* Eyebrow */}
             <div
+              className="hero-eyebrow"
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -165,6 +169,7 @@ export default function Hero() {
             {/* Name */}
             <div style={{ marginBottom: '32px' }}>
               <div
+                className="hero-name"
                 style={{
                   fontFamily: 'var(--font-fraunces), serif',
                   fontWeight: 800,
@@ -178,6 +183,7 @@ export default function Hero() {
                 Jason
               </div>
               <div
+                className="hero-name"
                 style={{
                   fontFamily: 'var(--font-fraunces), serif',
                   fontWeight: 800,
@@ -205,6 +211,7 @@ export default function Hero() {
 
             {/* Footer Row */}
             <div
+              className="hero-footer-row"
               style={{
                 display: 'flex',
                 alignItems: 'flex-start',
@@ -212,6 +219,7 @@ export default function Hero() {
               }}
             >
               <span
+                className="hero-bio"
                 style={{
                   fontFamily: 'var(--font-space-grotesk), sans-serif',
                   fontWeight: 300,

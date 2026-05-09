@@ -58,6 +58,7 @@ export default function Experience() {
   return (
     <section
       id="experience"
+      className="experience-section"
       style={{
         padding: '0 56px 120px',
       }}
@@ -111,6 +112,7 @@ function ExperienceRow({
 }) {
   return (
     <motion.div
+      className="experience-row"
       initial={{ y: 28, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}

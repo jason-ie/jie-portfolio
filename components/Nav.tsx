@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 export default function Nav() {
   return (
     <nav
+      className="nav-root"
       style={{
         position: "fixed",
         top: 0,
@@ -22,6 +23,7 @@ export default function Nav() {
       <motion.a
         href="#hero"
         whileHover={{ color: "var(--accent)" }}
+        className="nav-brand"
         style={{
           fontFamily: "var(--font-space-grotesk), sans-serif",
           fontWeight: 500,
@@ -38,6 +40,7 @@ export default function Nav() {
       </motion.a>
 
       <div
+        className="nav-links"
         style={{
           display: "flex",
           gap: "40px",
@@ -49,6 +52,7 @@ export default function Nav() {
             key={label}
             href={`#${label.toLowerCase()}`}
             whileHover={{ color: "var(--accent)" }}
+            className="nav-link"
             style={{
               fontFamily: "var(--font-space-grotesk), sans-serif",
               fontWeight: 400,

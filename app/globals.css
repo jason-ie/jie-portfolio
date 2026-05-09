@@ -61,3 +61,100 @@ body {
   margin-top: 8px;
   width: 40px;
 }
+
+/* === Mobile (≤768px) === */
+@media (max-width: 768px) {
+  /* Nav: keep horizontal — 4 short words. Tighten gap + font, reduce padding. */
+  .nav-root {
+    padding: 18px 20px !important;
+  }
+  .nav-brand {
+    font-size: 11px !important;
+    letter-spacing: 0.1em !important;
+  }
+  .nav-links {
+    gap: 16px !important;
+  }
+  .nav-link {
+    font-size: 11px !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  /* Hero: shrink padding, scale name, dim portrait so it doesn't fight the name. */
+  .hero-content {
+    padding: 0 20px 32px !important;
+  }
+  .hero-portrait {
+    left: 20px !important;
+    height: 28vh !important;
+    opacity: 0.4 !important;
+  }
+  .hero-name {
+    font-size: clamp(56px, 16vw, 96px) !important;
+  }
+  .hero-eyebrow {
+    width: 100% !important;
+  }
+  .hero-footer-row {
+    flex-direction: column !important;
+    gap: 20px !important;
+    align-items: flex-start !important;
+  }
+  .hero-bio {
+    font-size: 12px !important;
+    max-width: 100% !important;
+  }
+
+  /* About: stack columns, reduce padding. */
+  .about-section {
+    padding: 80px 20px !important;
+  }
+  .about-ghost {
+    right: 20px !important;
+    font-size: 64px !important;
+  }
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 48px !important;
+  }
+  .about-headline {
+    font-size: clamp(28px, 7vw, 40px) !important;
+  }
+  .about-stack-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Work: single column, reduce padding. Drawer goes full width. */
+  .work-section {
+    padding: 80px 20px !important;
+  }
+  .work-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .work-drawer {
+    width: 100vw !important;
+    min-width: 0 !important;
+  }
+
+  /* Experience: stack date/role/badge — date and badge sit inline above content. */
+  .experience-section {
+    padding: 0 20px 80px !important;
+  }
+  .experience-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  /* Contact: shrink padding, tighten link gap, stack footer. */
+  .contact-section {
+    padding: 0 20px 60px !important;
+  }
+  .contact-links {
+    gap: 20px !important;
+  }
+  .contact-footer {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+}
