@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Portrait Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #111318;
+      --text: #E8E2F4;
+      --text-secondary: rgba(232,226,244,0.60);
+      --text-dim: rgba(232,226,244,0.38);
+      --text-sub: rgba(232,226,244,0.42);
+      --accent: #8B9CF4;
+      --ghost-stroke: rgba(139,156,244,0.22);
+      --rule: rgba(232,226,244,0.07);
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Controls ── */
+    .controls {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      display: flex;
+      gap: 8px;
+      background: rgba(17,19,24,0.9);
+      border: 1px solid rgba(139,156,244,0.20);
+      border-radius: 100px;
+      padding: 6px 8px;
+    }
+    .btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-sub);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover  { color: var(--text); }
+    .btn.active { background: rgba(139,156,244,0.14); border-color: rgba(139,156,244,0.30); color: var(--accent); }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 56px;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+      pointer-events: none;
+    }
+    .logo { font-weight: 500; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-secondary); }
+    nav ul { display: flex; gap: 40px; list-style: none; }
+    nav li  { font-size: 13px; letter-spacing: 0.06em; color: var(--text-secondary); }
+
+    /* ── Hero shell ── */
+    .hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* ── JSON Ghost ── */
+    .ghost {
+      position: absolute;
+      top: 0; right: 0;
+      line-height: 0.85;
+      text-align: right;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      mask-image:
+        radial-gradient(ellipse 95% 80% at 75% 45%, black 40%, transparent 85%),
+        linear-gradient(to bottom, black 50%, transparent 100%);
+      -webkit-mask-image:
+        radial-gradient(ellipse 95% 80% at 75% 45%, black 40%, transparent 85%),
+        linear-gradient(to bottom, black 50%, transparent 100%);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+    }
+    .ghost-line {
+      font-family: 'Georgia', serif;
+      font-weight: 900;
+      font-size: 52vw;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--ghost-stroke);
+      display: block;
+    }
+
+    /* ── Portrait wrapper — shared styles ── */
+    .portrait-wrap {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      transition: none;
+    }
+    .portrait-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      /* invert: dark strokes → white; contrast: pushes checker squares toward black; screen: black pixels vanish on dark bg */
+      filter: invert(1);
+    }
+
+    /* ── OPTION A: Top-left, fades downward ── */
+    .opt-a .portrait-wrap {
+      top: 0;
+      left: 56px;
+      width: min(30vw, 360px);
+      height: 75vh;
+      object-position: center top;
+      mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 80%);
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 45%, transparent 80%);
+      animation: drawDown 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+    .opt-a .portrait-wrap img { object-position: center top; }
+    @keyframes drawDown {
+      from { clip-path: inset(0 0 0 100%); }
+      to   { clip-path: inset(0 0 0 0%); }
+    }
+
+    /* ── OPTION B: Bottom-left, rises up alongside text ── */
+    .opt-b .portrait-wrap {
+      bottom: 0;
+      left: 0;
+      width: min(28vw, 340px);
+      height: 80%;
+      mask-image: linear-gradient(to top, transparent 0%, black 20%, black 65%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 65%, transparent 100%);
+      animation: drawUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+    .opt-b .portrait-wrap img { object-position: center 15%; }
+    @keyframes drawUp {
+      from { clip-path: inset(0 0 100% 0); }
+      to   { clip-path: inset(0 0 0%   0); }
+    }
+
+    /* ── OPTION C: Center-left, full height, low opacity ── */
+    .opt-c .portrait-wrap {
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-65%);
+      width: min(34vw, 400px);
+      height: 90%;
+      opacity: 0.55;
+      mask-image: linear-gradient(to top, transparent 0%, black 18%, black 70%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, black 18%, black 70%, transparent 100%);
+      animation: drawUp 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+    }
+    .opt-c .portrait-wrap img { object-position: center 10%; }
+
+    /* ── Content ── */
+    .content {
+      position: relative;
+      z-index: 2;
+      padding: 0 56px 56px;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .eyebrow-rule { width: 28px; height: 1px; background: var(--accent); }
+    .eyebrow-label { font-weight: 400; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+    .name { margin-bottom: 32px; }
+    .name-main  { font-family: 'Georgia', serif; font-weight: 800; font-size: clamp(56px, 8vw, 120px); letter-spacing: -0.03em; line-height: 0.95; color: var(--text); }
+    .name-italic { font-family: 'Georgia', serif; font-weight: 800; font-size: clamp(56px, 8vw, 120px); letter-spacing: -0.03em; line-height: 0.95; font-style: italic; color: var(--accent); }
+    .rule-line { width: 100%; height: 1px; background: var(--rule); margin-bottom: 20px; }
+    .footer-row { display: flex; align-items: flex-start; justify-content: space-between; }
+    .bio { font-weight: 300; font-size: 13px; color: var(--text-dim); max-width: 320px; line-height: 1.6; }
+    .scroll-col { display: flex; flex-direction: column; align-items: flex-end; }
+    .scroll-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-sub); }
+    .scroll-bar { height: 1px; width: 40px; background: var(--accent); margin-top: 8px; animation: scanner 2s ease-in-out infinite; }
+    @keyframes scanner {
+      0%      { transform: scaleX(0); transform-origin: left; }
+      50%     { transform: scaleX(1); transform-origin: left; }
+      50.001% { transform: scaleX(1); transform-origin: right; }
+      100%    { transform: scaleX(0); transform-origin: right; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">Jason Ie</span>
+  <ul><li>About</li><li>Work</li><li>Experience</li><li>Contact</li></ul>
+</nav>
+
+<!-- Default: Option A -->
+<div class="hero opt-a" id="hero">
+
+  <div class="ghost">
+    <span class="ghost-line">JS</span>
+    <span class="ghost-line">ON</span>
+  </div>
+
+  <div class="portrait-wrap" id="portrait">
+    <img src="./public/portrait.png" alt="">
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">
+      <div class="eyebrow-rule"></div>
+      <span class="eyebrow-label">Software Engineer</span>
+    </div>
+    <div class="name">
+      <div class="name-main">Jason</div>
+      <div class="name-italic">Ie.</div>
+    </div>
+    <div class="rule-line"></div>
+    <div class="footer-row">
+      <span class="bio">CS + Finance, Math @ Northeastern University<br>quantitative systems &amp; ML.</span>
+      <div class="scroll-col">
+        <span class="scroll-label">Scroll</span>
+        <div class="scroll-bar"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="controls">
+  <button class="btn active" onclick="setOpt('a')">A — Top left, fades down</button>
+  <button class="btn"        onclick="setOpt('b')">B — Bottom left, rises up</button>
+  <button class="btn"        onclick="setOpt('c')">C — Center ghost, low opacity</button>
+  <button class="btn"        onclick="replay()">↺ Replay</button>
+</div>
+
+<script>
+  const hero = document.getElementById('hero');
+  const portrait = document.getElementById('portrait');
+  const btns = document.querySelectorAll('.btn');
+  let current = 'a';
+
+  function setOpt(opt) {
+    hero.className = 'hero opt-' + opt;
+    current = opt;
+    btns.forEach((b, i) => b.classList.toggle('active', ['a','b','c'][i] === opt));
+    replay();
+  }
+
+  function replay() {
+    portrait.style.animation = 'none';
+    portrait.offsetHeight;
+    const anims = { a: 'drawDown', b: 'drawUp', c: 'drawUp' };
+    portrait.style.animation = `${anims[current]} 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both`;
+  }
+</script>
+</body>
+</html>

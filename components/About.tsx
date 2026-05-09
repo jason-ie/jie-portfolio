@@ -1,25 +1,29 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { useScramble } from "use-scramble";
+import { useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useScramble } from 'use-scramble';
 
 const stack = [
-  "C++ / Systems",
-  "Go / Distributed",
-  "Python / ML",
-  "Swift / iOS",
-  "Raft / Consensus",
-  "FIX / HFT",
+  'Python',
+  'TypeScript / JS',
+  'Node / Express',
+  'Java / SpringBoot',
+  'AWS / Cloud',
+  'SQL',
+  'Docker / K8s',
+  'C#',
+  'Git',
 ];
 
 const interests = [
-  "Formula 1",
-  "Chess",
-  "Markets",
-  "Coffee",
-  "Basketball",
-  "Anime",
+  'Chess',
+  'Trading',
+  'Coffee',
+  'Basketball',
+  'Poker',
+  'Golf',
+  'Travel',
 ];
 
 export default function About() {
@@ -34,7 +38,7 @@ export default function About() {
   const rightInView = useInView(rightRef, { once: true });
 
   const { ref: scrambleRef, replay } = useScramble({
-    text: "About",
+    text: 'About',
     speed: 0.6,
     tick: 1,
     step: 1,
@@ -53,59 +57,59 @@ export default function About() {
     <section
       id="about"
       style={{
-        position: "relative",
-        padding: "120px 56px",
-        overflow: "hidden",
+        position: 'relative',
+        padding: '120px 56px',
+        overflow: 'hidden',
       }}
     >
       <div>
         {/* Ghost number */}
         <span
           style={{
-            position: "absolute",
+            position: 'absolute',
             top: 0,
-            right: "56px",
-            fontFamily: "Courier New, monospace",
-            fontSize: "120px",
+            right: '56px',
+            fontFamily: 'Courier New, monospace',
+            fontSize: '120px',
             fontWeight: 700,
-            color: "var(--text)",
+            color: 'var(--text)',
             opacity: 0.025,
             lineHeight: 1,
-            userSelect: "none",
-            pointerEvents: "none",
+            userSelect: 'none',
+            pointerEvents: 'none',
           }}
         >
-          02
+          @jason-ie
         </span>
 
         {/* Section Label */}
         <div
           ref={labelRef}
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "16px",
-            marginBottom: "48px",
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            marginBottom: '48px',
           }}
         >
           <span
             ref={scrambleRef}
             style={{
-              fontFamily: "var(--font-space-grotesk), sans-serif",
+              fontFamily: 'var(--font-space-grotesk), sans-serif',
               fontWeight: 400,
-              fontSize: "12px",
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "var(--text-sub)",
+              fontSize: '12px',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'var(--text)',
             }}
           />
           {/* Animated rule */}
-          <div ref={ruleRef} style={{ flex: 1, overflow: "hidden" }}>
+          <div ref={ruleRef} style={{ flex: 1, overflow: 'hidden' }}>
             <motion.div
               style={{
-                height: "1px",
-                background: "var(--rule)",
-                transformOrigin: "left",
+                height: '1px',
+                background: 'var(--rule)',
+                transformOrigin: 'left',
               }}
               initial={{ scaleX: 0 }}
               animate={{ scaleX: ruleInView ? 1 : 0 }}
@@ -117,10 +121,10 @@ export default function About() {
         {/* Two-column grid */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "80px",
-            alignItems: "start",
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr',
+            gap: '80px',
+            alignItems: 'start',
           }}
         >
           {/* Left column */}
@@ -133,27 +137,27 @@ export default function About() {
             {/* Eyebrow */}
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                marginBottom: "20px",
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginBottom: '20px',
               }}
             >
               <div
                 style={{
-                  width: "28px",
-                  height: "1px",
-                  background: "var(--accent)",
+                  width: '28px',
+                  height: '1px',
+                  background: 'var(--accent)',
                 }}
               />
               <span
                 style={{
-                  fontFamily: "var(--font-space-grotesk), sans-serif",
+                  fontFamily: 'var(--font-space-grotesk), sans-serif',
                   fontWeight: 400,
-                  fontSize: "11px",
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "var(--accent)",
+                  fontSize: '11px',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  color: 'var(--accent)',
                 }}
               >
                 Who I am
@@ -163,47 +167,51 @@ export default function About() {
             {/* Headline */}
             <div
               style={{
-                fontFamily: "var(--font-fraunces), serif",
-                fontStyle: "italic",
+                fontFamily: 'var(--font-fraunces), serif',
+                fontStyle: 'italic',
                 fontWeight: 700,
-                fontSize: "clamp(32px, 4vw, 56px)",
+                fontSize: 'clamp(32px, 4vw, 56px)',
                 lineHeight: 1.1,
-                marginBottom: "24px",
+                marginBottom: '24px',
               }}
             >
-              <span style={{ color: "var(--text)" }}>Making computers go </span>
-              <span style={{ color: "var(--green, #22C55E)" }}>fast</span>
+              <span style={{ color: 'var(--text)' }}>Making computers go </span>
+              <span style={{ color: 'var(--green, #22C55E)' }}>fast</span>
               <br />
-              <span style={{ color: "var(--text)" }}>so I don&apos;t have to think </span>
-              <span style={{ color: "var(--red, #EF4444)" }}>slow</span>
-              <span style={{ color: "var(--text)" }}>.</span>
+              <span style={{ color: 'var(--text)' }}>
+                so I don&apos;t have to think{' '}
+              </span>
+              <span style={{ color: 'var(--red, #EF4444)' }}>slow</span>
+              <span style={{ color: 'var(--text)' }}>.</span>
             </div>
 
             {/* Rule */}
             <div
               style={{
-                width: "100%",
-                height: "1px",
-                background: "var(--rule)",
-                marginBottom: "20px",
+                width: '100%',
+                height: '1px',
+                background: 'var(--rule)',
+                marginBottom: '20px',
               }}
             />
 
             {/* Bio */}
             <p
               style={{
-                fontFamily: "var(--font-space-grotesk), sans-serif",
+                fontFamily: 'var(--font-space-grotesk), sans-serif',
                 fontWeight: 300,
-                fontSize: "13px",
-                color: "var(--text-secondary)",
+                fontSize: '13px',
+                color: 'var(--text-secondary)',
                 lineHeight: 1.75,
                 margin: 0,
               }}
             >
-              I&apos;m a senior CS student obsessed with the parts of the stack
-              where performance decisions actually matter — distributed systems,
-              ML infrastructure, and quantitative engineering. When I&apos;m not
-              tuning latency, I&apos;m probably overengineering something for fun.
+              I like building things and figuring out how to make them better.
+              Smarter trading strategies, lines on sports betting markets, the
+              occasional app for a fashion intervention. Tech gives me a ceiling
+              I'll never actually hit, and finance makes it interesting. There's
+              always something new to learn, a taller mountain to climb, and
+              that's what I love about it.
             </p>
           </motion.div>
 
@@ -212,47 +220,51 @@ export default function About() {
             ref={rightRef}
             initial={{ y: 24, opacity: 0 }}
             animate={rightInView ? { y: 0, opacity: 1 } : {}}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{
+              duration: 0.6,
+              delay: 0.1,
+              ease: [0.25, 0.1, 0.25, 1],
+            }}
           >
             {/* Stack grid */}
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "8px",
-                marginBottom: "24px",
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr 1fr',
+                gap: '8px',
+                marginBottom: '24px',
               }}
             >
               {stack.map((item) => (
                 <div
                   key={item}
                   style={{
-                    border: "1px solid rgba(232,226,244,0.08)",
-                    borderRadius: "2px",
-                    padding: "8px 10px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
+                    border: '1px solid rgba(232,226,244,0.18)',
+                    borderRadius: '3px',
+                    padding: '8px 10px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
                   }}
                 >
                   <div
                     style={{
-                      width: "3px",
-                      height: "3px",
-                      borderRadius: "50%",
-                      background: "var(--accent)",
+                      width: '3px',
+                      height: '3px',
+                      borderRadius: '50%',
+                      background: 'var(--accent)',
                       opacity: 0.6,
                       flexShrink: 0,
                     }}
                   />
                   <span
                     style={{
-                      fontFamily: "var(--font-jetbrains-mono), monospace",
-                      fontSize: "10px",
-                      color: "var(--text-dim)",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      fontFamily: 'var(--font-jetbrains-mono), monospace',
+                      fontSize: '10px',
+                      color: 'var(--text-secondary)',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
                     }}
                   >
                     {item}
@@ -264,21 +276,21 @@ export default function About() {
             {/* Interests */}
             <div
               style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "8px",
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '8px',
               }}
             >
               {interests.map((interest) => (
                 <span
                   key={interest}
                   style={{
-                    border: "1px solid rgba(232,226,244,0.07)",
-                    borderRadius: "100px",
-                    padding: "5px 12px",
-                    fontFamily: "var(--font-space-grotesk), sans-serif",
-                    fontSize: "11px",
-                    color: "var(--text-dim)",
+                    border: '1px solid rgba(232,226,244,0.18)',
+                    borderRadius: '100px',
+                    padding: '5px 12px',
+                    fontFamily: 'var(--font-space-grotesk), sans-serif',
+                    fontSize: '12px',
+                    color: 'var(--text-secondary)',
                   }}
                 >
                   {interest}

@@ -8,7 +8,7 @@ const links = [
   { label: 'Email', href: 'mailto:ie.jasonray10@gmail.com' },
   { label: 'GitHub', href: 'https://github.com/jason-ie' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/jason-ie' },
-  { label: 'Resume', href: '/resume.pdf' },
+  { label: 'Resume', href: '/Jason_Ie_Resume.pdf' },
 ];
 
 export default function Contact() {
@@ -56,7 +56,7 @@ export default function Contact() {
             fontSize: '12px',
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
-            color: 'var(--text-secondary)',
+            color: 'var(--text)',
           }}
         />
         <div

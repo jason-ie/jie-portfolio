@@ -19,7 +19,9 @@ export default function Nav() {
         pointerEvents: "none",
       }}
     >
-      <span
+      <motion.a
+        href="#hero"
+        whileHover={{ color: "var(--accent)" }}
         style={{
           fontFamily: "var(--font-space-grotesk), sans-serif",
           fontWeight: 500,
@@ -27,11 +29,13 @@ export default function Nav() {
           letterSpacing: "0.12em",
           textTransform: "uppercase",
           color: "var(--text-secondary)",
+          textDecoration: "none",
           pointerEvents: "auto",
+          transition: "color 0.2s ease",
         }}
       >
         Jason Ie
-      </span>
+      </motion.a>
 
       <div
         style={{
@@ -40,7 +44,7 @@ export default function Nav() {
           pointerEvents: "auto",
         }}
       >
-        {["Work", "Experience", "Contact"].map((label) => (
+        {["About", "Work", "Experience", "Contact"].map((label) => (
           <motion.a
             key={label}
             href={`#${label.toLowerCase()}`}

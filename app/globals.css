@@ -46,6 +46,12 @@ body {
   100% { transform: scaleX(0); transform-origin: right; }
 }
 
+/* Portrait sketch reveal — wipes left-to-right on hero entry */
+@keyframes portraitDrawIn {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0%   0 0); }
+}
+
 .scroll-cue::after {
   content: '';
   display: block;
